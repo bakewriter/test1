@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>立ち絵切り替え</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #f5fbff;
+      font-family: "Hiragino Sans", "Yu Gothic", sans-serif;
+    }
+
+    .container {
+      text-align: center;
+      padding: 24px;
+    }
+
+    .character-wrap {
+      position: relative;
+      width: min(420px, 90vw);
+      aspect-ratio: 3 / 4;
+      margin: 0 auto 24px;
+      cursor: pointer;
+    }
+
+    .character-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      opacity: 0;
+      transform: scale(0.985) translateY(4px);
+      filter: blur(1px);
+      transition:
+        opacity 0.75s ease,
+        transform 0.75s ease,
+        filter 0.75s ease;
+      pointer-events: none;
+    }
+
+    .character-image.active {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+      filter: blur(0);
+    }
+
+    .message {
+      min-height: 48px;
+      font-size: 28px;
+      font-weight: bold;
+      color: #26a6d1;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.45s ease, transform 0.45s ease;
+    }
+
+    .message.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="character-wrap" id="characterWrap">
+      <!-- srcの中にbase64画像を入れてください -->
+      <img
+        src="NORMAL_IMAGE_BASE64_HERE"
+        alt="真顔の立ち絵"
+        class="character-image active"
+        id="normalImage"
+      />
+
+      <img
+        src="SAD_IMAGE_BASE64_HERE"
+        alt="悲しんでいる立ち絵"
+        class="character-image"
+        id="sadImage"
+      />
+    </div>
+
+    <div class="message" id="message"></div>
+  </div>
+
+  <script>
+    const characterWrap = document.getElementById("characterWrap");
+    const normalImage = document.getElementById("normalImage");
+    const sadImage = document.getElementById("sadImage");
+    const message = document.getElementById("message");
+
+    characterWrap.addEventListener("click", () => {
+      normalImage.classList.remove("active");
+      sadImage.classList.add("active");
+
+      message.textContent = "お茶爆ください";
+      message.classList.add("show");
+    });
+  </script>
+</body>
+</html>
